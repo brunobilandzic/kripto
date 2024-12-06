@@ -20,24 +20,7 @@ const config = (type) => {
   }
 };
 
-// const mutualProps = {
-//   host: "blockchain.oss.unist.hr",
-//   username: "student",
-//   password: "n24PTn9YHfRDteLaMMyE6KPNJTakd4cfmNVj62jd8kr2REi2i8Tn",
-// };
-
-// const testnetConfig = {
-//   ...mutualProps,
-//   network: "testnet",
-//   port: 50004,
-// };
-
-// const mainnetConfig = {
-//   ...mutualProps,
-//   network: "mainnet",
-//   port: 53012,
-// };
-
 module.exports = {
   config,
 };
+    
