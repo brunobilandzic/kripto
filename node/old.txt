@@ -1,0 +1,65 @@
+// const handleAnswer = async (answer) => {
+  //   if (!Object.keys(options).includes(answer)) {
+  //     console.log("Invalid choice. Please select a valid option.");
+  //     rl.question(questionText, handleAnswer);
+  //     return;
+  //   }
+
+  //   switch (answer) {
+  //     case "1":
+  //       console.log(await getBestBlock());
+  //       break;
+  //     case "2":
+  //       const height = await generateRandomBlockHeight();
+  //       console.log(await getBlockByHeight(height));
+  //       break;
+  //     case "3":
+  //       const bestBlock = await getBestBlock();
+  //       console.log(await getBlockByHash(bestBlock.hash));
+  //       break;
+  //     case "4":
+  //       const blockHeight = await generateRandomBlockHeight();
+  //       console.log(await getBlockTransactions(blockHeight));
+  //       break;
+  //     case "5":
+  //       console.log(await getBlockchainInfo());
+  //       break;
+  //     case "6":
+  //       console.log(await getRawMempool());
+  //       break;
+  //     case "7":
+  //       console.log(await getBlockCount());
+  //       break;
+  //     default:
+  //       console.log("Invalid choice. Please select a valid option.");
+  //   }
+
+  //   rl.question(questionText, handleAnswer);
+  // };
+
+  // rl.question(questionText, handleAnswer);
+
+
+  // await working()
+
+  // await getBestBlock()
+
+  //const options = {
+//   1: "Get best block hash",
+//   2: "Get block hash by height",
+//   3: "Get block by hash",
+//   4: "Get block transactions by height",
+//   5: "Get blockchain info",
+//   6: "Get raw mempool",
+//   7: "Get block count",
+//   8: "Exit",
+// };
+
+// const questionText = `
+// What would you like to do?
+// ${Object.keys(options)
+//   .map((key) => `${key}. ${options[key]}`)
+//   .join("\n")}
+// ${"=".repeat(80)}\n
+// Your choice:
+// `;
