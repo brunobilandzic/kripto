@@ -1,6 +1,8 @@
 const Client = require("bitcoin-core");
 const { config } = require("./config");
+
 const { print_divider, decodeUnix } = require("./utils");
+const fs = require("fs");
 
 const brunoClient = new Client(config("mainnet"));
 
@@ -8,6 +10,8 @@ const tx1 = process.env.TX1;
 const tx2 = process.env.TX2;
 const bl = process.env.BL;
 const bt = "d7aa00bd647086ec3a96ffe590a74466be63419ecaebfda61ee0fd252c287211";
+
+// console.log(tx1, tx2, bl, bt);
 
 const getBlockchainInfo = async () => {
   try {
@@ -100,6 +104,21 @@ const getBlockByHash = async (hash) => {
   }
 };
 
+const getBlockByHashVerbose = async (hash) => {
+  try {
+    const block = await brunoClient.getBlock(hash, 2);
+    console.log(
+      `Block [${decodeUnix(block.time)}] at hash ${hash} has  ${JSON.stringify(
+        block.tx.length
+      )} transactions`
+    );
+    print_divider();
+    return block;
+  } catch (err) {
+    console.error("Error: ", err);
+  }
+};
+
 const generateRandomBlockHeight = async () => {
   const blockchainSize = await getBlockCount();
   return Math.floor(Math.random() * blockchainSize);
@@ -173,7 +192,44 @@ const main = async () => {
   // console.log("output number: ", outn);
   // await getBlockTransactions(123123);
   // await getBestBlock();
-  await heightBlock(100900);
+  // await heightBlock(100900);
+  //await randomFIle()
+};
+
+const randomFIle = async () => {
+  const block = await getBlockByHashVerbose(bl);
+  const searchid = getSearchId(block.tx[0].txid);
+  // const  searchid = bt;
+  // const  searchid = tx1;
+  const tx = block.tx.find((tx) => {
+    return tx.txid == searchid;
+  });
+  console.log(tx);
+
+  writeInFIle(tx, searchid);
+};
+
+const getSearchId = (blockTx) => {
+  const chance = Math.random();
+
+  if (chance < 0.33) {
+    return tx1;
+  } else if (chance < 0.66) {
+    return tx2;
+  } else {
+    return blockTx;
+  }
+};
+
+const writeInFIle = (tx, searchid) => {
+  fs.appendFile(
+    "txs.txt",
+    `\ntransaction ${searchid} in block ${bl} is ${JSON.stringify(tx)}`,
+    (err) => {
+      if (err) return console.log("Error file: ", err);
+      console.log("file written");
+    }
+  );
 };
 
 const getTransactionOutputNumber = async (bhash, thash) => {
@@ -227,6 +283,8 @@ module.exports = {
   getBlockchainInfo,
   getRawMempool,
   getTransactionOutputNumber,
+  getSearchId,
+  writeInFIle,
 };
 
 // getTransactionOutputNumber(

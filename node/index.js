@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { } = require("./axiosRPC");
 
 const {
   getBlockCount,
