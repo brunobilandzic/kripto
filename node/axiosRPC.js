@@ -28,7 +28,7 @@ const client = axios.create({
   headers: env.headers,
   auth: env.auth,
 });
-
+ 
 const getBlock = async (hash, verbose = 2) => {
   try {
     console.log(client.defaults.baseURL);

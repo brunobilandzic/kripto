@@ -3,6 +3,7 @@ const { config } = require("./config");
 
 const { print_divider, decodeUnix } = require("./utils");
 const fs = require("fs");
+const { getRawTransaction } = require("bitcoin/lib/commands");
 
 const brunoClient = new Client(config("mainnet"));
 
@@ -155,10 +156,6 @@ const getBlockTransactions = async (height) => {
   }
 };
 
-const getBlockTxsInstant = async (height) => {
-  const block = await heightBlock(height);
-};
-
 const fee = async (tx) => {
   const voutsum = tx.vout.reduce((acc, v) => acc + v.value, 0);
   let vinsum = 0;
@@ -194,19 +191,23 @@ const main = async () => {
   // await getBestBlock();
   // await heightBlock(100900);
   //await randomFIle()
+  await randomFile()
 };
 
-const randomFIle = async () => {
+const randomFile = async () => {
   const block = await getBlockByHashVerbose(bl);
-  const searchid = getSearchId(block.tx[0].txid);
+
+  //const searchid = getSearchId(block.tx[0].txid);
   // const  searchid = bt;
   // const  searchid = tx1;
-  const tx = block.tx.find((tx) => {
-    return tx.txid == searchid;
-  });
-  console.log(tx);
 
-  writeInFIle(tx, searchid);
+  const vert1 = await brunoClient.getRawTransaction(tx1, true);
+  const vert2 = await brunoClient.getRawTransaction(tx2, true);
+  const blt = await brunoClient.getRawTransaction(block.tx[0].txid);
+
+  writeInFIle(vert1, tx1);
+  writeInFIle(vert2, tx2);
+   writeInFIle(blt, block.tx[0].txid);
 };
 
 const getSearchId = (blockTx) => {
@@ -285,7 +286,7 @@ module.exports = {
   getTransactionOutputNumber,
   getSearchId,
   writeInFIle,
-};
+}; 
 
 // getTransactionOutputNumber(
 //   "ba5f2650a46db9c7ac6521d0f121125b7ea04603d4b7e47da2c7d836c3aea491"
